@@ -11,7 +11,7 @@ use Data::Dumper qw(Dumper);
 my $browser = LWP::UserAgent->new;
 
 sub get_api_key {
-    my $config = Config::Tiny->read('config.ini');
+    my $config = Config::Tiny->read('keys.ini');
     return $config->{openweathermap}{api};
 }
  

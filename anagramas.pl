@@ -6,17 +6,17 @@ sub main {
 
     my $prim_string= shift @ARGV;       ## Tomo argumentos
     my $seg_string = shift @ARGV;       ## Tomo argumentos
-
+    ### Tomo sus tamaños: 
     my $prim_string_size = length $prim_string;    
     my $seg_string_size = length $seg_string;    
 
     my @prim_string_list = (); 
     my @second_string_list = (); 
-    
+    ### Si no miden lo mismo ya esta:
     if ($prim_string_size != $seg_string_size){
         return print("False","\n");
     }
-
+    ### Agrego a una lista cada Char de cada String
     for (my $var = 0; $var < $seg_string_size; $var++) {
         push(@second_string_list,substr($seg_string,$var,1));
         push(@prim_string_list,substr($prim_string,$var,1));
