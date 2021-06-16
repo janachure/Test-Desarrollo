@@ -10,25 +10,25 @@ use Data::Dumper qw(Dumper);
 
 my $browser = LWP::UserAgent->new;
 
-sub get_api_key {
+sub conseguir_clave {
+	### tengo que abrir el archivo y leer las claves:
     my $config = Config::Tiny->read('keys.ini');
     return $config->{openweathermap}{api};
 }
  
-sub get_weather {
+sub get_clima {
 
 	
     my ($api_key,$location) = @_;
     my $url;
-    #print(looks_like_number($location));
+    ### Estoy utilizando un numero de ciudad o un string de la ciudad
     if (looks_like_number($location)){
 		$url = sprintf('https://api.openweathermap.org/data/2.5/weather?id=%s&appid=%s&units=metric&lang=es', $location, $api_key);	    	
     }else {
     	$url = sprintf('https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric&lang=es', $location, $api_key);	
 
     }
-    #print($url);
-    #print ($url,"\n");
+    ### Pido al URL lo que necesito
     my $request = HTTP::Request->new(GET => $url);
 
     my $response = $browser->request($request);
@@ -37,14 +37,13 @@ sub get_weather {
 }
  
 sub main {
-    my $location = shift @ARGV or die "Usage: $0 QUEEE\n";
-    my $api_key = get_api_key();
-    my $weather = get_weather($api_key, $location);
-	#say $weather;	 
+    my $location = shift @ARGV or die " No tomo bien los parametros\n";
+    my $api_key = conseguir_clave();
+    my $weather = get_clima($api_key, $location);
+	
+	### Decodifico lo que me esta diciendo:
+	## Retornarlo por consola: 
     say ($weather->{weather}[0]{description},," ",$weather->{main}{temp},"°C", " ",($weather->{main}{humidity}),,"%",);
-    #say ;
-    #print (warn Dumper $weather);
-    #print ((warn Dumper $weather));
 }
  
 main();
