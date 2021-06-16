@@ -1,0 +1,21 @@
+Ejercicio 6:
+Aspectos importantes a testear en el ejercicio 2 seria la toma correcta de parametros y como se 
+interpretan cada uno de ellos, por ejemplo cual base estoy tomando primero y cual despues, luego
+la conversión a cada una de las bases y finalmente la interpretación correcta del resultado es decir
+si lo devuelto esta expresado en el formato correcto pedido.
+
+Ej 8: 
+
+Tomo al cliente especifico = 1 : 
+
+SELECT clientes.nombre_cliente, facturas.importe 
+FROM clientes, facturas 
+WHERE clientes.id = facturas.id_cliente_factura
+AND clientes.id = 1; 
+
+Ej 9: 
+Posiblemente haya que castear a un formato correcto el GETDATE:
+
+SELECT clientes.nombre_cliente, facturas.importe FROM clientes, facturas 
+WHERE clientes.id = facturas.id_cliente_factura
+AND facturas.date < GETDATE();
