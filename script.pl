@@ -1,9 +1,6 @@
 use strict;
 use warnings;
 
-my %cypher = ('a'=>'n', 'b'=>'o', 'c'=>'p', 'd'=>'q', 'e'=>'r', 'f'=>'s', 'g'=>'t', 'h'=>'u','i'=>'v', 'j'=>'w', 'k'=>'x', 'l'=>'y', 'm'=>'z', 'n'=>'a', 'o'=>'b', 'p'=>'c', 'q'=>'d', 'r'=>'e', 's'=>'f', 't'=>'g', 'u'=>'h', 'v'=>'i', 'w'=>'j', 'x'=>'k','y'=>'l', 'z'=>'m', 'A'=>'N', 'B'=>'O', 'C'=>'P', 'D'=>'Q', 'E'=>'R', 'F'=>'S', 'G'=>'T', 'H'=>'U', 'I'=>'V', 'J'=>'W', 'K'=>'X', 'L'=>'Y', 'M'=>'Z', 'N'=>'A', 'O'=>'B', 'P'=>'C', 'Q'=>'D', 'R'=>'E', 'S'=>'F', 'T'=>'G', 'U'=>'H', 'V'=>'I', 'W'=>'J', 'X'=>'K', 'Y'=>'L', 'Z'=>'M');
-#%decypher = reverse %cypher;
-
 my $count_argv = $#ARGV + 1;
 
 my @stack; ## Pila para polish
@@ -15,27 +12,30 @@ sub aplica_op {
     ## tomo operador
     my $op = shift @_; 
     if ($op eq "+") {
-        push @stack, $last_item1 + $last_item2;
+        push @stack, $last_item1 + $last_item2; ## En la suma no importa el orden
     }
     if ($op eq "-") {
-        push @stack, $last_item1 - $last_item2;
+        push @stack, $last_item2 - $last_item1; ## Aca si importa l_i2, l_i1 => l_i2-l_i1
     }
     if ($op eq "*") {
-        push @stack, $last_item1 * $last_item2;
+        push @stack, $last_item1 * $last_item2; ## En la * no importa el orden
     }
     if ($op eq "/") {
-        push @stack, $last_item1 / $last_item2;
+        push @stack, $last_item2 / $last_item1; ## Aca si importa => l_i2/l_i1
     }
 }
-
-for (my $i_argv = 0; $i_argv < $count_argv; $i_argv++) {
-        my $entry = shift; 
-        ## Si son operaciones:
-        if ($entry eq "+" || $entry eq "-" || $entry eq "*" || $entry eq "/"){ 
-                aplica_op($entry);
+sub main{
+        my $string = shift @ARGV;
+        my @entry = split(" ", $string);
+    foreach my $i (@entry) {
+        ## Si es un operador:
+        if ($i eq "+" || $i eq "-" || $i eq "*" || $i eq "/"){ 
+                aplica_op($i);
         } else { ## Si son son numeros:
-                push @stack, $entry;
+                push @stack, $i;
         }       
+    }
+    print (pop @stack,"\n");
 }
 
-print pop @stack;
+main();

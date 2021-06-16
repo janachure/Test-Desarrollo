@@ -33,28 +33,7 @@ sub get_weather {
 
     my $response = $browser->request($request);
     return decode_json($response->content());
-    #my $response = $browser->get($url);
-    #print($json_str);
-    #if (!defined($json_str)){
-    #	print "url no definida";
-    #}
-    #print decode_json($request);
-    
-    #print $response->content();
-    #print Dumper $response->content();
-    
-    #return $json_a;
 
-    #my $code = getprint($url);
-    #my $code = head($url);
-    #print($code);
-
-    #my $json_str = get($url);
-    #print(ref($json_str));
-    #print("como¡?");
-    #my %juan =  encode_json($json_str);
-    #say %juan;
-    #return @json_fin;
 }
  
 sub main {
@@ -62,7 +41,7 @@ sub main {
     my $api_key = get_api_key();
     my $weather = get_weather($api_key, $location);
 	#say $weather;	 
-    say ($weather->{name}," ",$weather->{weather}[0]{description},," ",$weather->{main}{temp},"°C", " ",($weather->{main}{humidity}),,"%",);
+    say ($weather->{weather}[0]{description},," ",$weather->{main}{temp},"°C", " ",($weather->{main}{humidity}),,"%",);
     #say ;
     #print (warn Dumper $weather);
     #print ((warn Dumper $weather));
